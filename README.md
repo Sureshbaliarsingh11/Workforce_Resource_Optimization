@@ -295,7 +295,6 @@ So once deployed to a Streamlit-compatible host:
 
 No local installation for the end user.
 
----
 
 # The Final Product in One Sentence
 
@@ -304,7 +303,5 @@ No local installation for the end user.
 ### And commercially, the pitch becomes:
 
 **Forecast Demand → Optimize Capacity → Deploy the Right Workforce → Reduce Cost → Protect Service Levels**
-
-That is much stronger than positioning it simply as a "demand forecasting tool." It is really a **Workforce Resource Optimization & Decision Intelligence platform**.
 
 I can also create a **single executive-ready architecture infographic** showing this entire product from data → forecasting → optimization → schedule → what-if → business outcomes.
