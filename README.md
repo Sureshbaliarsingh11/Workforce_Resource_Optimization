@@ -304,4 +304,58 @@ No local installation for the end user.
 
 **Forecast Demand → Optimize Capacity → Deploy the Right Workforce → Reduce Cost → Protect Service Levels**
 
-I can also create a **single executive-ready architecture infographic** showing this entire product from data → forecasting → optimization → schedule → what-if → business outcomes.
+## What We're Building
+
+**Workforce Resource Optimization Tool** — a browser-based application that helps operations leaders (retail, contact centers, warehouses, any shift-based workforce) figure out exactly how many people they need, when, and build an optimal staff schedule automatically — backed by real forecasting and mathematical optimization, not guesswork or spreadsheets.
+
+It's built as two things sharing the same core engine:
+- **A Streamlit web app** (the one you're deploying) — open a URL, no installation needed
+- **A React + FastAPI app** — the original architecture, kept as a future production path
+
+Both call the exact same Python business logic underneath, so the numbers are identical no matter which front end you use.
+
+## The Business Problem It Solves
+
+Most workforce planning today is reactive and manual: a manager eyeballs last week's numbers, guesses at next week's staffing, and finds out they're understaffed (angry customers, burned-out staff) or overstaffed (wasted labor cost) only after the fact. This tool replaces that guesswork with a connected, end-to-end pipeline:
+
+```
+How busy will we be?              → Demand Forecasting
+How many people does that need?   → Workforce Requirement Engine
+Who should actually work when?    → OR-Tools Optimization (real constraint solver)
+What if a manager needs to tweak it?  → Editable Schedule with validation
+What if demand changes?           → What-If Scenario Modeling
+So what does this mean for the business?  → Executive Dashboard
+```
+
+Every number on every screen is a real calculation — nothing is hardcoded or fabricated. If the optimizer genuinely can't build a feasible schedule (not enough skilled staff, say), it says so honestly instead of inventing one.
+
+## Step-by-Step Guide
+
+### Getting there
+Open the URL your app is deployed at (`https://your-app-name.streamlit.app` once live on Streamlit Community Cloud). Nothing to install — just a browser.
+
+### 1. Launch Demo
+On the **Home** page, click **Launch Demo**. This generates a realistic synthetic dataset — 2 locations, 3 departments, ~30 employees, 90 days of hourly demand with real patterns (busier midday, quieter weekends, occasional spikes) — in your own private session. (Or use **Data Management** to upload your own CSV/Excel data instead.)
+
+### 2. Demand Forecast
+Go to **Demand Forecast**. Pick a location, department, and horizon (7 or 14 days), then click **Generate Forecast**. The app backtests three statistical models against your actual history and automatically picks the most accurate one — you'll see WAPE (accuracy), bias, and which model won, plus a chart of actual vs. forecast demand.
+
+### 3. Workforce Requirement
+Go to **Workforce Requirement**. Set your productivity assumption (how much one employee handles per hour) and shrinkage (absence, breaks, training %), then click **Calculate**. This converts the forecast into "how many people do I need, hour by hour" — fully transparent math shown on screen.
+
+### 4. Optimized Schedule
+Go to **Optimized Schedule** and click **Generate Optimized Schedule**. A real constraint solver (Google OR-Tools) builds the lowest-cost schedule that respects every employee's availability, skills, and hour limits. You can then:
+- Edit any shift directly in the grid, see the cost/coverage impact before saving
+- **Save** or **Cancel** staged changes
+- **Undo** the last edit, or **Revert to Optimized** to throw away all manual edits
+
+### 5. What-If Scenarios
+Go to **What-If Scenarios**. Try a preset ("Demand +20%") or set your own combination of demand/absenteeism/productivity/cost changes, click **Run Scenario**. You get a real before/after comparison — required headcount, labor cost, coverage — because the app actually re-runs the forecast-to-schedule pipeline with your adjusted numbers, not an estimate.
+
+### 6. Executive Dashboard
+Go to **Executive Dashboard** — the one-screen summary for leadership: forecast accuracy, coverage %, labor cost, overtime, estimated savings, automated alerts ("understaffed by 4 employees 2–4pm tomorrow"), and concrete recommendations, all pulled together from everything you just did.
+
+### 7. Export
+From **Data Management**, download any result — forecast, requirement, schedule, scenario, or the executive summary — as a CSV for a spreadsheet or slide deck.
+
+**One thing worth knowing**: each browser session gets its own private workspace automatically — if colleagues open the same URL at the same time, none of you will see or affect each other's data.
